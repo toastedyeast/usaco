@@ -1,0 +1,3 @@
+C:/Users/pli48/CLionProjects/ytsetup/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/pli48/CLionProjects/ytsetup/cmake-build-debug/CMakeFiles/ytsetup.dir
+C:/Users/pli48/CLionProjects/ytsetup/cmake-build-debug/CMakeFiles/edit_cache.dir

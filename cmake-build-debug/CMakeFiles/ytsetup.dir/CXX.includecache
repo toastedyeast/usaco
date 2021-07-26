@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/pli48/CLionProjects/ytsetup/main.cpp
+iostream
+-
+cmath
+-
+string
+-
+vector
+-
+algorithm
+-
+map
+-
+set
+-
+array
+-
+iterator
+-
+tuple
+-
+
