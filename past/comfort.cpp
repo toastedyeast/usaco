@@ -4,34 +4,27 @@
 
 using namespace std;
 
-bool is_comfortable(int num, int cows[][2], int x, int y);
-
 int main() {
-    int num; cin >> num; int cows[num][2];
-    for (int i=0; i<num; i++) {
-        int x, y; cin >> x >> y;
-        cows[i][0] = x;
-        cows[i][1] = y;
-        int comfortable_this_turn = 0;
-
-        for (int j=0; j<num; j++) {
-            int x_coord = cows[j][0]; int y_coord = cows[j][1];
-            if (is_comfortable(num, cows, x_coord, y_coord)) {
-                comfortable_this_turn++;
+    int N; cin >> N;
+    bool grid[1001][1001]; int cows[N][2];
+    for (int i=0; i<N; i++) {
+        int x; int y;
+        cin >> x >> y;
+        cows[i][0] = x; cows[i][1] = y;
+        grid[x][y] = true;
+        int comfortable_counter = 0;
+        for (int j=0; j<i+1; j++) {
+            int x_coord = cows[j][0];
+            int y_coord = cows[j][1];
+            int neighbor_counter = 0;
+            if (grid[x_coord + 1][y_coord]) neighbor_counter++;
+            if (grid[x_coord - 1][y_coord]) neighbor_counter++;
+            if (grid[x_coord][y_coord + 1]) neighbor_counter++;
+            if (grid[x_coord][y_coord - 1]) neighbor_counter++;
+            if (neighbor_counter == 3) {
+                comfortable_counter++;
             }
         }
-        cout << comfortable_this_turn << endl;
+        cout << comfortable_counter << endl;
     }
-}
-
-bool is_comfortable(int num, int cows[][2], int x, int y) {
-    int neighbors = 0;
-    for (int i=0; i<num; i++) {
-        if (cows[i][0] == x + 1 && cows[i][1] == y) neighbors++;
-        if (cows[i][0] == x - 1 && cows[i][1] == y) neighbors++;
-        if (cows[i][0] == x && cows[i][1] == y + 1) neighbors++;
-        if (cows[i][0] == x && cows[i][1] == y - 1) neighbors++;
-    }
-    if (neighbors == 3) return true;
-    else return false;
 }

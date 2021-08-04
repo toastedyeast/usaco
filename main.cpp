@@ -8,72 +8,54 @@
 #include <array>
 #include <iterator>
 #include <tuple>
+#include <unordered_map>
 
 using namespace std;
-int location;
-
-
 
 int main() {
-    int N, M, K; cin >> N >> M >> K;
-    int order[M];
-    for (int i=0; i<M; i++) {
-        cin >> order[i];
-    }
-    int pos[N];
-    for (int i=0; i<K; i++) {
-       int loc, cow; cin >> cow >> loc;
-       pos[loc - 1] = cow;
-    }
-    bool finished = false;
-    while (!finished) {
-        for (int i=1; i<N; i++) {
-            if (pos[i]) {
-                int index = -1;
-                for (int j=0; j<M; j++) {
-                    if (order[j] == pos[i]) {
-                        index = j;
-                        break;
-                    }
-                }
-                bool not_already = true;
-                if (index != -1 && index != 0) {
-                    int before = order[index - 1];
-                    for (int j=0; j<N; j++) {
-                        if (pos[j] == before) {
-                            not_already = false;
-                            break;
-                        }
-                    }
-                    if (not_already) {
-                        bool done = false;
-                        int loc = i;
-                        while (!done) {
-                            if (pos[loc]) {
-                                loc--;
-                            } else {
-                                pos[loc] = before;
-                                done = true;
-                            }
-                        }
-                        i=1;
-                    }
-                }
-            }
-        }
-        int not_filled_counter = 0;
-        for (int i=0; i<N; i++) {
-            if (!pos[i]) {
-                not_filled_counter++;
-                location = i;
-            }
-        }
-        if (not_filled_counter == 1) {
-            finished = true;
+    freopen("socdist2.in", "r", stdin);
+    freopen("socdist2.out", "w", stdout);
+    int N; cin >> N;
+    vector<int> healthy; vector<int> sick;
+    for (int i=0; i<N; i++) {
+        int pos, infected;
+        cin >> pos >> infected;
+        if (infected == 0) {
+            healthy.push_back(pos);
+        } else {
+            sick.push_back(pos);
         }
     }
-    cout << location;
-
-
-
+    if (healthy.empty()) {
+        cout << 1;
+        return 0;
+    }
+    int max_R = 2^31-1;
+    for (auto cow: sick) {
+        int closest = 2^31-1;
+        for (auto heal: healthy) {
+            if (abs(heal - cow) < closest) closest = abs(heal - cow);
+        }
+        if (closest < max_R) max_R = closest;
+    }
+    max_R = max_R - 1;
+    int counter = 0;
+    sort(sick.begin(), sick.end());
+//    for (int i=0; i<sick.size(); i++) {
+//        contaminated[sick[i]] = true;
+//        if (i != sick.size() - 1) {
+//            if (sick[i] + max_R > sick[i + 1]) {
+//                continue;
+//            } else {
+//                counter++;
+//            }
+//        }
+//    }
+    for (int i=0; i<sick.size(); i++) {
+        if (i==0 || sick[i - 1] + max_R < sick[i]) {
+            counter++;
+        }
+    }
+    cout << counter;
 }
+
