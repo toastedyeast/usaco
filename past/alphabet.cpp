@@ -16,7 +16,6 @@ int main() {
             }
             if (j == alphabet.length() - 1) {
                 sung++;
-                j == 0;
             }
         }
     }
